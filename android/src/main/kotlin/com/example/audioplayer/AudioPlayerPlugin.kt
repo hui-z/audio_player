@@ -20,12 +20,14 @@ class AudioPlayerPlugin : MethodCallHandler, MediaPlayer.OnPreparedListener, Med
     private val registrar: Registrar
     private var player: MediaPlayer
     private val playList:MutableList<String>
+    private var playing: Boolean
 
     constructor(registrar: Registrar) {
 
         this.registrar = registrar
         this.player = MediaPlayer()
         this.playList = emptyArray<String>().toMutableList()
+        this.playing = false
         player.setOnPreparedListener(this)
         player.setOnCompletionListener(this)
     }
@@ -41,7 +43,7 @@ class AudioPlayerPlugin : MethodCallHandler, MediaPlayer.OnPreparedListener, Med
     }
     private fun addSound(path: String) {
         playList.add(path)
-        if (!player.isPlaying) {
+        if (!player.isPlaying && !playing) {
             playNext()
         }
     }
@@ -54,6 +56,7 @@ class AudioPlayerPlugin : MethodCallHandler, MediaPlayer.OnPreparedListener, Med
 
     }
     private fun playSound(path: String) {
+        playing = true
         val assetManager = registrar.context().assets
         val assetLookupKey = registrar.lookupKeyForAsset(path)
         val input = assetManager.openFd(assetLookupKey)
@@ -68,6 +71,7 @@ class AudioPlayerPlugin : MethodCallHandler, MediaPlayer.OnPreparedListener, Med
     }
 
     override fun onCompletion(mp: MediaPlayer?) {
+        playing = false
         playNext()
     }
 }

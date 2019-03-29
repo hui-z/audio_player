@@ -15,24 +15,12 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
-    // initPlatformState();
   }
 
   Future<void> playSound() async {
-
-    // String dir = (await getApplicationDocumentsDirectory()).path;
-
-
-    String result;
-    try {
-      result = await AudioPlayer.addSound('assets/network_disconnect.m4a');
-    } on PlatformException {
-      result = 'Failed to get platform version.';
-    }
-    print(result);
+    SoundPlayerUtil.addSoundName('network_disconnect.m4a',count: 3);
+    // AudioPlayer.addSound('assets/network_disconnect.m4a');
   }
-
   
 
   @override
@@ -52,5 +40,14 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+}
+
+
+class SoundPlayerUtil {
+  static void addSoundName(String name, {int count = 1}) {
+    for (var i = 0; i < count; i++) {
+      AudioPlayer.addSound('assets/' + name);
+    }
   }
 }

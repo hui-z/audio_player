@@ -45,6 +45,7 @@ public class SwiftAudioPlayerPlugin: NSObject, FlutterPlugin {
             AudioServicesCreateSystemSoundID(url as CFURL, &soundId)
             playing = true
             AudioServicesPlaySystemSoundWithCompletion(soundId) {
+                self.playing = false
                 self.playNext()
             }
         }

@@ -36,7 +36,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/network_disconnect.m4a
-    - assets/network_disconnect.mp3
+    - assets/printer_disconnect.m4a
 
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
