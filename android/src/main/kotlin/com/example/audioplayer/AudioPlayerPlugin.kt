@@ -19,7 +19,7 @@ class AudioPlayerPlugin : MethodCallHandler, MediaPlayer.OnPreparedListener, Med
 
     private val registrar: Registrar
     private var player: MediaPlayer
-    private val playList:MutableList<String>
+    private val playList: MutableList<String>
     private var playing: Boolean
 
     constructor(registrar: Registrar) {
@@ -33,12 +33,17 @@ class AudioPlayerPlugin : MethodCallHandler, MediaPlayer.OnPreparedListener, Med
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
-
-        if (call.method == "addSound") {
-            val arg = call.arguments as? String ?: return
-            addSound(arg)
-        } else {
-            result.notImplemented()
+        when (call.method) {
+            "addSound" -> {
+                val arg = call.arguments as? String ?: return
+                addSound(arg)
+            }
+            "removeAllSound" -> {
+                removeAllSound()
+            }
+            else -> {
+                result.notImplemented()
+            }
         }
     }
     private fun addSound(path: String) {
@@ -46,6 +51,9 @@ class AudioPlayerPlugin : MethodCallHandler, MediaPlayer.OnPreparedListener, Med
         if (!player.isPlaying && !playing) {
             playNext()
         }
+    }
+    private fun removeAllSound() {
+        playList.removeAll { true }
     }
     private fun playNext() {
         if (playList.count() > 0) {
@@ -55,6 +63,7 @@ class AudioPlayerPlugin : MethodCallHandler, MediaPlayer.OnPreparedListener, Med
         }
 
     }
+
     private fun playSound(path: String) {
         playing = true
         val assetManager = registrar.context().assets

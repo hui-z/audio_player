@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:audio_player/audio_player.dart';
+import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,12 +14,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  Future<void> playSound() async {
-    SoundPlayerUtil.addSoundName('network_disconnect.m4a',count: 3);
-    // AudioPlayer.addSound('assets/network_disconnect.m4a');
-  }
-  
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,23 +22,39 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: RawMaterialButton(
-            child: Text('Play'),
-            onPressed: () {
-              playSound();
-            },
-          ),
-        ),
+            child: Column(
+          children: <Widget>[
+            RawMaterialButton(
+              child: Text('network disconnect'),
+              onPressed: () => SoundPlayerUtil.addSoundName(
+                  'network_disconnect.m4a',
+                  count: 3),
+            ),
+            RawMaterialButton(
+              child: Text('printer disconnect'),
+              onPressed: () => SoundPlayerUtil.addSoundName(
+                  'printer_disconnect.m4a',
+                  count: 3),
+            ),
+            RawMaterialButton(
+              child: Text('remove all'),
+              onPressed: () => SoundPlayerUtil.removeAllSound(),
+            ),
+          ],
+        )),
       ),
     );
   }
 }
-
 
 class SoundPlayerUtil {
   static void addSoundName(String name, {int count = 1}) {
     for (var i = 0; i < count; i++) {
       AudioPlayer.addSound('assets/' + name);
     }
+  }
+
+  static void removeAllSound() {
+    AudioPlayer.removeAllSound();
   }
 }

@@ -15,10 +15,13 @@ public class SwiftAudioPlayerPlugin: NSObject, FlutterPlugin {
         self.registrar = registrar
     }
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        if call.method == "addSound" {
+        switch call.method {
+        case "addSound":
             guard let path = call.arguments as? String else {return}
             addSound(path: path)
-        } else {
+        case "removeAllSound":
+            removeAllSound()
+        default:
             result("error: not Implemented")
         }
     }
@@ -28,6 +31,9 @@ public class SwiftAudioPlayerPlugin: NSObject, FlutterPlugin {
             playNext()
         }
         
+    }
+    private func removeAllSound(){
+        playList.removeAll()
     }
     private func playNext() {
         if (playList.count > 0) {
