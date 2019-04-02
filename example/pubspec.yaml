@@ -19,7 +19,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  audio_player:
+  flutter_audio_player:
     path: ../
 
 # For information on the generic Dart part of this file, see the
