@@ -1,6 +1,6 @@
-# audio_player
+# flutter_audio_player
 
-A simple plugin to play local audio
+Plugin that allow flutter to play local short sound simple.
 
 ## Install
 

@@ -1,5 +1,5 @@
 #import "AudioPlayerPlugin.h"
-#import <audio_player/audio_player-Swift.h>
+#import <flutter_audio_player/flutter_audio_player-Swift.h>
 
 @implementation AudioPlayerPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {

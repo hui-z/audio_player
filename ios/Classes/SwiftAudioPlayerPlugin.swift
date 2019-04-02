@@ -11,6 +11,7 @@ public class SwiftAudioPlayerPlugin: NSObject, FlutterPlugin {
     let registrar: FlutterPluginRegistrar
     var playing:Bool = false
     var playList:[String] = []
+    var soundDict:[String:SystemSoundID] = [:]
     init(with registrar: FlutterPluginRegistrar) {
         self.registrar = registrar
     }
@@ -44,16 +45,20 @@ public class SwiftAudioPlayerPlugin: NSObject, FlutterPlugin {
     }
     
     private func playSound(path: String ) {
-        let assetPath = registrar.lookupKey(forAsset: path)
-        if let urlString = Bundle.main.path(forResource: assetPath, ofType: nil) {
+        var soundId:SystemSoundID = 0
+        if let sid = soundDict[path] {
+            soundId = sid
+        } else {
+            let assetPath = registrar.lookupKey(forAsset: path)
+            guard let urlString = Bundle.main.path(forResource: assetPath, ofType: nil) else { return }
             let url = URL(fileURLWithPath: urlString)
-            var soundId:SystemSoundID = 0
             AudioServicesCreateSystemSoundID(url as CFURL, &soundId)
-            playing = true
-            AudioServicesPlaySystemSoundWithCompletion(soundId) {
-                self.playing = false
-                self.playNext()
-            }
+            soundDict[path] = soundId
+        }
+        playing = true
+        AudioServicesPlaySystemSoundWithCompletion(soundId) {
+            self.playing = false
+            self.playNext()
         }
     }
 }
