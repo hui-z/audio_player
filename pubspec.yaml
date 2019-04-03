@@ -1,6 +1,6 @@
 name: flutter_audio_player
-description: Plugin that allow flutter to play local audio simple by a list.
-version: 0.1.1
+description: Plugin that allow flutter to play a local short sound(30 seconds or less in duration).
+version: 0.1.2
 author: Bai <equweiyu@hotmail.com>
 homepage: https://github.com/hui-z/audio_player
 

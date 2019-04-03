@@ -1,10 +1,10 @@
 # flutter_audio_player
 
-Plugin that allow flutter to play local short sound simple.
+Plugin that allow flutter to play a local short sound(30 seconds or less in duration).
 
 ## Install
 
-add `audio_player` as a dependency in pubspec.yaml
+add `flutter_audio_player` as a dependency in pubspec.yaml
 
 ## How to use
 
