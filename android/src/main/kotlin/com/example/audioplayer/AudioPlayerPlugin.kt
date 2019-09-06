@@ -7,7 +7,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
-class AudioPlayerPlugin : MethodCallHandler, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener {
+class AudioPlayerPlugin(private val registrar: Registrar) : MethodCallHandler, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener {
 
     companion object {
         @JvmStatic
@@ -17,17 +17,11 @@ class AudioPlayerPlugin : MethodCallHandler, MediaPlayer.OnPreparedListener, Med
         }
     }
 
-    private val registrar: Registrar
-    private var player: MediaPlayer
-    private val playList: MutableList<String>
-    private var playing: Boolean
+    private var player = MediaPlayer()
+    private val playList = emptyArray<String>().toMutableList()
+    private var playing = false
 
-    constructor(registrar: Registrar) {
-
-        this.registrar = registrar
-        this.player = MediaPlayer()
-        this.playList = emptyArray<String>().toMutableList()
-        this.playing = false
+    init {
         player.setOnPreparedListener(this)
         player.setOnCompletionListener(this)
     }
